@@ -10,6 +10,10 @@ const MAXCOUNT = 10;
 const MINCOUNT = 2;
 
 appendRowButton.addEventListener('click', (e) => {
+  if (rows.length >= MAXCOUNT - 1) {
+    appendRowButton.setAttribute('disabled', 'disabled');
+  }
+
   const newRow = rows[0].cloneNode(true);
 
   table.append(newRow);
@@ -17,13 +21,13 @@ appendRowButton.addEventListener('click', (e) => {
   if (rows.length > MINCOUNT) {
     removeRowButton.removeAttribute('disabled');
   }
-
-  if (rows.length >= MAXCOUNT) {
-    appendRowButton.setAttribute('disabled', 'disabled');
-  }
 });
 
 removeRowButton.addEventListener('click', (e) => {
+  if (rows.length <= MINCOUNT + 1) {
+    removeRowButton.setAttribute('disabled', 'disabled');
+  }
+
   const lastRow = table.lastElementChild;
 
   lastRow.remove();
@@ -31,13 +35,13 @@ removeRowButton.addEventListener('click', (e) => {
   if (rows.length < MAXCOUNT) {
     appendRowButton.removeAttribute('disabled');
   }
-
-  if (rows.length <= MINCOUNT) {
-    removeRowButton.setAttribute('disabled', 'disabled');
-  }
 });
 
 appendColumnButton.addEventListener('click', (e) => {
+  if (rows[0].children.length >= MAXCOUNT - 1) {
+    appendColumnButton.setAttribute('disabled', 'disabled');
+  }
+
   [...rows].forEach((row) => {
     const newCell = row.firstElementChild.cloneNode(true);
 
@@ -47,13 +51,13 @@ appendColumnButton.addEventListener('click', (e) => {
   if (rows[0].children.length > MINCOUNT) {
     removeColumnButton.removeAttribute('disabled');
   }
-
-  if (rows[0].children.length >= MAXCOUNT) {
-    appendColumnButton.setAttribute('disabled', 'disabled');
-  }
 });
 
 removeColumnButton.addEventListener('click', (e) => {
+  if (rows[0].children.length <= MINCOUNT + 1) {
+    removeColumnButton.setAttribute('disabled', 'disabled');
+  }
+
   [...rows].forEach((row) => {
     const lastCell = row.lastElementChild;
 
@@ -62,9 +66,5 @@ removeColumnButton.addEventListener('click', (e) => {
 
   if (rows[0].children.length < MAXCOUNT) {
     appendColumnButton.removeAttribute('disabled');
-  }
-
-  if (rows[0].children.length <= MINCOUNT) {
-    removeColumnButton.setAttribute('disabled', 'disabled');
   }
 });
